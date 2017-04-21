@@ -264,6 +264,17 @@
     
 }
 
+-(UIButton*)spawnStyledButton
+{
+    if (self.buttonFont == nil) {
+        return [UIButton buttonWithType:UIButtonTypeSystem];
+    } else {
+        UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn.titleLabel setFont:self.buttonFont];
+        return btn;
+    }
+}
+
 #pragma mark - Drawing AlertView
 
 - (void)drawRect:(CGRect)rect {
@@ -485,8 +496,17 @@
     // TEXTFIELD VIEW - Section with TextField
     
     if (alertTextFields.count > 0) {
+        UITextField * customTextField;
+        if ([self.delegate respondsToSelector:@selector(FCAlertViewCustomTextField)]) {
+            customTextField = [self.delegate FCAlertViewCustomTextField];
         
-        _textField = [[UITextField alloc] initWithFrame:CGRectMake(12.5, descriptionLabel.frame.size.height + descriptionLabel.frame.origin.y + 10.5, alertViewFrame.size.width - 25, 40)];
+            
+        if (customTextField != nil){
+            customTextField.frame = CGRectMake(12.5, descriptionLabel.frame.size.height + descriptionLabel.frame.origin.y + 10.5, alertViewFrame.size.width - 25, 40);
+            _textField = customTextField;
+        } else {
+            _textField = [[UITextField alloc] initWithFrame:CGRectMake(12.5, descriptionLabel.frame.size.height + descriptionLabel.frame.origin.y + 10.5, alertViewFrame.size.width - 25, 40)];
+        }
         
         _textField.layer.cornerRadius = 3.0f;
         _textField.layer.masksToBounds = YES;
@@ -511,7 +531,7 @@
     
     if (_numberOfButtons == 0) { // View only contains DONE/DISMISS Button
         
-        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *doneButton = [self spawnStyledButton];
         if (_colorScheme == nil) {
             doneButton.backgroundColor = [UIColor whiteColor];
             if (_detachButtons)
@@ -550,7 +570,7 @@
         
     } else if (_numberOfButtons == 1) { // View also contains OTHER (One) Button
         
-        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *doneButton = [self spawnStyledButton];
         if (_colorScheme == nil) {
             doneButton.backgroundColor = [UIColor whiteColor];
             if (_detachButtons)
@@ -584,7 +604,7 @@
         if (self.doneButtonTitleColor != nil)
             doneButton.tintColor = self.doneButtonTitleColor;
         
-        UIButton *otherButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *otherButton = [self spawnStyledButton];
         otherButton.backgroundColor = [UIColor whiteColor];
         if (_detachButtons)
             otherButton.backgroundColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
@@ -659,7 +679,7 @@
         
     } else if (_numberOfButtons >= 2) { // View  contains TWO OTHER Buttons - First & Second Button
         
-        UIButton *firstButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *firstButton = [self spawnStyledButton];
         firstButton.backgroundColor = [UIColor whiteColor];
         if (_detachButtons)
             firstButton.backgroundColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
@@ -703,7 +723,7 @@
         firstButton.titleLabel.minimumScaleFactor = 0.8;
         firstButton.tag = 0;
         
-        UIButton *secondButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *secondButton = [self spawnStyledButton];
         secondButton.backgroundColor = [UIColor whiteColor];
         if (_detachButtons)
             secondButton.backgroundColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
@@ -746,7 +766,7 @@
         secondButton.titleLabel.minimumScaleFactor = 0.8;
         secondButton.tag = 1;
         
-        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *doneButton = [self spawnStyledButton];
         if (_colorScheme == nil) {
             doneButton.backgroundColor = [UIColor whiteColor];
             if (_detachButtons)
@@ -956,27 +976,27 @@
     UIImage *starImage = [[self loadImageFromResourceBundle:@"star.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImage *heartImage = [[self loadImageFromResourceBundle:@"heart.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
-    item1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    item1 = [self spawnStyledButton];
     item1.tintColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
     item1.frame = CGRectMake(40*0 + spacingBetween, 0, 40.0f, 40.0f);
     item1.userInteractionEnabled = 0;
     
-    item2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    item2 = [self spawnStyledButton];
     item2.tintColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
     item2.frame = CGRectMake(40*1 + spacingBetween, 0, 40.0f, 40.0f);
     item2.userInteractionEnabled = 0;
     
-    item3 = [UIButton buttonWithType:UIButtonTypeCustom];
+    item3 = [self spawnStyledButton];
     item3.tintColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
     item3.frame = CGRectMake(40*2 + spacingBetween, 0, 40.0f, 40.0f);
     item3.userInteractionEnabled = 0;
     
-    item4 = [UIButton buttonWithType:UIButtonTypeCustom];
+    item4 = [self spawnStyledButton];
     item4.tintColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
     item4.frame = CGRectMake(40*3 + spacingBetween, 0, 40.0f, 40.0f);
     item4.userInteractionEnabled = 0;
     
-    item5 = [UIButton buttonWithType:UIButtonTypeCustom];
+    item5 = [self spawnStyledButton];
     item5.tintColor = [UIColor colorWithWhite:228.0f/255.0f alpha:1.0];
     item5.frame = CGRectMake(40*4 + spacingBetween, 0, 40.0f, 40.0f);
     item5.userInteractionEnabled = 0;

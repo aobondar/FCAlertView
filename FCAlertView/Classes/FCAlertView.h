@@ -200,6 +200,8 @@ typedef void (^FCTextReturnBlock)(NSString *text);
 @property (nonatomic, retain) UIColor * flatSilver;
 @property (nonatomic, retain) UIColor * flatGray;
 
+@property (nonatomic, retain) UIFont * buttonFont;
+
 @end
 
 @protocol FCAlertViewDelegate <NSObject>
@@ -208,5 +210,6 @@ typedef void (^FCTextReturnBlock)(NSString *text);
 - (void)FCAlertViewDismissed:(FCAlertView *)alertView;
 - (void)FCAlertViewWillAppear:(FCAlertView *)alertView;
 - (void)FCAlertDoneButtonClicked:(FCAlertView *)alertView;
+-(UITextField*)FCAlertViewCustomTextField;
 
 @end
